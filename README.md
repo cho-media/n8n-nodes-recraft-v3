@@ -10,20 +10,24 @@ This is an n8n community node for the **Recraft v3 AI image generation and editi
 
 ## ✨ Features
 
-### 🎨 **Image Generation**
-- **Text-to-Image**: Generate stunning images from text prompts (up to 4000 characters)
+### 🎨 **Complete Image Generation**
+- **Text-to-Image**: Generate stunning images from text prompts (up to 1000 bytes)
+- **Multiple Images**: Generate 1-6 images per request
 - **Vector & Raster**: Support for both vector and raster image generation
-- **Multiple Styles**: Realistic images, digital illustrations, vector illustrations, and icons
-- **Sub-styles**: Hand drawn, pixel art, cartoon, anime, 3D render options
+- **Multiple Styles**: Realistic images, digital illustrations, vector illustrations, icons, and logo raster
+- **Comprehensive Sub-styles**: 20+ realistic substyles, 35+ digital illustration substyles, 20+ vector substyles, and more
 - **Custom Styles**: Create and use custom brand styles from reference images
-- **Advanced Controls**: Color control and precise text layout positioning
+- **Advanced Controls**: Artistic level, background color, color preferences, and text layout positioning
+- **Negative Prompts**: Specify what you don't want in your images
 
-### 🛠️ **Image Editing**
+### 🛠️ **Complete Image Editing**
 - **Image-to-Image**: Transform existing images based on prompts with strength control
+- **Multiple Image Generation**: Generate multiple variations in one request
 - **Inpainting**: Replace specific parts of images using masks
 - **Background Operations**: Replace or remove backgrounds automatically
 - **Vectorization**: Convert raster images to scalable SVG format
 - **Upscaling**: Both crisp and creative upscaling for enhanced resolution
+- **Flexible Response Formats**: Get URLs or base64 data
 
 ### 📊 **Account Management**
 - **User Info**: Get account information and credits balance
@@ -61,14 +65,20 @@ npm install n8n-nodes-recraft-v3
 
 ## 💡 Usage Examples
 
-### Text-to-Image Generation
+### Advanced Text-to-Image Generation
 ```yaml
 Resource: Image
 Operation: Generate
 Prompt: "A serene landscape with mountains reflected in a crystal-clear lake at golden hour"
 Model: Recraft V3
 Style: Realistic Image
-Size: 1024x1024
+Sub Style: Natural Light
+Number of Images: 3
+Negative Prompt: "blurry, low quality, people"
+Advanced Options:
+  Artistic Level: 4
+  Background Color: RGB(135, 206, 235)
+  Colors: [RGB(255, 215, 0), RGB(139, 69, 19)]
 ```
 
 ### Custom Brand Style Creation
@@ -79,7 +89,7 @@ Base Style: Digital Illustration
 Reference Images: data (binary property with 3-5 brand reference images)
 ```
 
-### Image Transformation
+### Multi-Image Transformation
 ```yaml
 Resource: Image
 Operation: Image to Image
@@ -87,95 +97,117 @@ Input Image: data (binary property with source image)
 Prompt: "Transform to a winter scene with snow and ice"
 Strength: 0.7
 Style: Realistic Image
+Number of Images: 4
+Negative Prompt: "summer, heat, desert"
 ```
 
-### Vector Art Generation
+### Professional Vector Art
 ```yaml
 Resource: Image
 Operation: Generate
 Prompt: "Clean geometric logo of a mountain peak with sun rays"
 Style: Vector Illustration
+Sub Style: Line Art
 Size: 1024x1024
+Response Format: URL
 ```
 
-### Background Operations
+### Advanced Background Operations
 ```yaml
 Resource: Image
 Operation: Replace Background
 Input Image: data (source image)
 Prompt: "Professional office environment with soft lighting"
 Style: Realistic Image
+Number of Images: 2
+Response Format: Base64 JSON
 ```
 
 ## 🎯 Supported Operations
 
 ### Image Operations
-- **Generate**: Create images from text prompts
-- **Image to Image**: Transform images with prompts
-- **Inpaint**: Replace masked areas in images
-- **Replace Background**: Change image backgrounds
+- **Generate**: Create images from text prompts with full control
+- **Image to Image**: Transform images with prompts and strength control
+- **Inpaint**: Replace masked areas in images with precision
+- **Replace Background**: Change image backgrounds intelligently
 - **Remove Background**: Remove backgrounds completely
-- **Vectorize**: Convert to SVG format
-- **Crisp Upscale**: Enhance resolution (sharp)
-- **Creative Upscale**: Enhance resolution (detailed)
+- **Vectorize**: Convert to SVG format for infinite scalability
+- **Crisp Upscale**: Enhance resolution (sharp and clean)
+- **Creative Upscale**: Enhance resolution (detailed and refined)
 
 ### Style Operations
-- **Create**: Build custom styles from reference images
+- **Create**: Build custom styles from reference images (up to 5 images, max 5MB total)
 
 ### User Operations
 - **Get Info**: Retrieve account and credit information
 
-## 🎨 Available Styles
+## 🎨 Complete Style & Substyle Options
 
-### Base Styles
-- **Realistic Image**: Photo-like images from digital cameras
-- **Digital Illustration**: Hand-drawn or computer-generated art
-- **Vector Illustration**: Clean vector graphics with flat colors
-- **Icon**: Simple, recognizable symbols
+### Realistic Image (20 substyles)
+- Black & White, Enterprise, Evening Light, Faded Nostalgia, Forest Life, Hard Flash, HDR, Motion Blur, Mystic Naturalism, Natural Light, Natural Tones, Organic Calm, Real Life Glow, Retro Realism, Retro Snapshot, Studio Portrait, Urban Drama, Village Realism, Warm Folk
 
-### Sub-styles (Digital Illustration)
-- Hand Drawn
-- Pixel Art
-- Cartoon
-- Anime
-- 3D Render
+### Digital Illustration (35 substyles)
+- 2D Art Poster, Antiquarian, Bold Fantasy, Child Book, Cover, Crosshatch, Digital Engraving, Engraving Color, Expressionism, Freehand Details, Grain, Graphic Intensity, Hand Drawn, Hand Drawn Outline, Handmade 3D, Hard Comics, Infantile Sketch, Long Shadow, Modern Folk, Multicolor, Neon Calm, Noir, Nostalgic Pastel, Outline Details, Pastel Gradient, Pastel Sketch, Pixel Art, Plastic, Pop Art, Pop Renaissance, Seamless, Street Art, Tablet Sketch, Urban Glow, Urban Sketching, Young Adult Book
+
+### Vector Illustration (20 substyles)
+- Bold Stroke, Chemistry, Colored Stencil, Cosmics, Cutout, Depressive, Editorial, Emotional Flat, Engraving, Line Art, Line Circuit, Linocut, Marker Outline, Mosaic, Naivector, Roundish Flat, Seamless, Segmented Colors, Sharp Contrast, Thin, Vector Photo, Vivid Shapes
+
+### Logo Raster (5 substyles)
+- Emblem Graffiti, Emblem Pop Art, Emblem Punk, Emblem Stamp, Emblem Vintage
 
 ## 📐 Supported Image Sizes
 
 - **Square**: 1024x1024
-- **Landscape**: 1365x1024, 1536x1024, 1820x1024, 2048x1024
-- **Portrait**: 1024x1365, 1024x1536, 1024x1820, 1024x2048
-- **Standard**: 1280x1024, 1024x1280
+- **Landscape**: 1365x1024, 1536x1024, 1820x1024, 2048x1024, 1434x1024, 1280x1024, 1707x1024
+- **Portrait**: 1024x1365, 1024x1536, 1024x1820, 1024x2048, 1024x1434, 1024x1280, 1024x1707
 
 ## 🔧 Advanced Features
 
-### Color Control
-Specify exact RGB colors to include in your generated images.
+### Controls & Customization
+- **Artistic Level**: Fine-tune creative expression (0-5 scale)
+- **Background Color**: Set exact background colors with RGB values
+- **Color Preferences**: Specify multiple preferred colors for the image
+- **No Text**: Disable automatic text embedding
+- **Negative Prompts**: Exclude unwanted elements from all operations
 
-### Text Layout
+### Text Layout (Recraft V3 Only)
 Position text elements precisely using bounding box coordinates:
 ```json
 [[0.3, 0.45], [0.6, 0.45], [0.6, 0.55], [0.3, 0.55]]
 ```
 
+### Multi-Image Generation
+Generate 1-6 images per request for:
+- Text-to-image generation
+- Image-to-image transformation  
+- Inpainting operations
+- Background replacement
+
 ### Custom Styles
-Upload 3-5 reference images to create brand-consistent styles for all your generations.
+Upload up to 5 reference images (max 5MB total) to create brand-consistent styles for all your generations.
 
 ## 📁 File Support
 
 - **Input Formats**: PNG, JPG, JPEG, WEBP
-- **Output Formats**: PNG, JPG, WEBP, SVG (vectorization)
-- **Maximum File Size**: 5 MB
-- **Maximum Resolution**: 16 MP
+- **Output Formats**: PNG, JPG, WEBP, SVG (vectorization), Base64 data
+- **Maximum File Size**: 5 MB per image
+- **Maximum Resolution**: 16 MP (4 MP for crisp upscale)
 - **Maximum Dimension**: 4096 pixels
 - **Minimum Dimension**: 256 pixels (32 for crisp upscale)
 
 ## 💰 Pricing
 
-- **Raster Image Generation**: $0.04 per image
-- **Vector Image Generation**: $0.08 per image
-- **Other Operations**: Vary by complexity
-- Check [Recraft pricing](https://www.recraft.ai/pricing) for details
+- **Recraft V3 Raster**: $0.04 per image (40 API units)
+- **Recraft V3 Vector**: $0.08 per image (80 API units)
+- **Recraft V2 Raster**: $0.022 per image (22 API units)
+- **Recraft V2 Vector**: $0.044 per image (44 API units)
+- **Vectorization**: $0.01 per image (10 API units)
+- **Background Removal**: $0.01 per image (10 API units)
+- **Crisp Upscale**: $0.004 per image (4 API units)
+- **Creative Upscale**: $0.25 per image (250 API units)
+- **Style Creation**: $0.04 per style (40 API units)
+
+Check [Recraft pricing](https://www.recraft.ai/pricing) for complete details.
 
 ## 🚨 Error Handling
 
@@ -183,8 +215,9 @@ The node includes comprehensive error handling:
 - File size and format validation
 - API rate limit handling
 - Network error recovery
-- Clear error messages
+- Clear error messages with specific guidance
 - Continue on fail option
+- Input validation for all parameters
 
 ## 🔗 Resources
 
@@ -206,7 +239,7 @@ MIT License - see LICENSE file for details.
 
 ### Development & Testing
 - Code follows n8n best practices and includes comprehensive error handling
-- Thoroughly reviewed against 2025 n8n community node standards
+- Thoroughly reviewed against 2025 n8n community node standards and complete Recraft API
 - **Recommended**: Test in development environments before production use
 - Always validate outputs and monitor API usage
 
