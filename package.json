@@ -1,6 +1,6 @@
 {
   "name": "n8n-nodes-recraft-v3",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Unofficial n8n community node for Recraft v3 AI image generation and editing API - the #1 ranked text-to-image model. Created for testing and community use.",
   "keywords": [
     "n8n-community-node-package",
@@ -30,7 +30,7 @@
   "main": "index.js",
   "scripts": {
     "build": "tsc && npm run build:icons",
-    "build:icons": "echo 'Icons built'",
+    "build:icons": "cp nodes/RecraftV3/recraft.svg dist/nodes/RecraftV3/",
     "dev": "tsc --watch",
     "format": "prettier credentials nodes --write || true",
     "lint": "eslint credentials nodes --ext .ts || true",
