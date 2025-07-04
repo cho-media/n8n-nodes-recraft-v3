@@ -4,6 +4,7 @@ import {
 	INodeExecutionData,
 	INodeType,
 	INodeTypeDescription,
+	NodeConnectionType,
 	NodeOperationError,
 } from 'n8n-workflow';
 
@@ -21,8 +22,8 @@ export class RecraftV3 implements INodeType {
 		defaults: {
 			name: 'Recraft v3',
 		},
-		inputs: ['main'],
-		outputs: ['main'],
+		inputs: [NodeConnectionType.Main],
+		outputs: [NodeConnectionType.Main],
 		credentials: [
 			{
 				name: 'recraftApi',
@@ -619,7 +620,7 @@ export class RecraftV3 implements INodeType {
 		],
 	};
 
-	async execute(this: IExecuteFunctions): Promise<INodeExecutionData[]> {
+	async execute(this: IExecuteFunctions): Promise<INodeExecutionData[][]> {
 		const items = this.getInputData();
 		const returnData: INodeExecutionData[] = [];
 
@@ -845,7 +846,6 @@ export class RecraftV3 implements INodeType {
 					this.helpers.returnJsonArray(responseData),
 					{ 
 						itemData: { item: i },
-						pairedItem: { item: i },
 					},
 				);
 
@@ -868,6 +868,6 @@ export class RecraftV3 implements INodeType {
 			}
 		}
 
-		return returnData;
+		return [returnData];
 	}
 }
