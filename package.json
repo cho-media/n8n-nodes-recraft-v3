@@ -1,6 +1,6 @@
 {
   "name": "n8n-nodes-recraft-v3",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "description": "Unofficial n8n community node for Recraft v3 AI image generation and editing API - the #1 ranked text-to-image model. Created for testing and community use.",
   "keywords": [
     "n8n-community-node-package",
@@ -15,14 +15,14 @@
     "midjourney-alternative"
   ],
   "license": "MIT",
-  "homepage": "https://github.com/recraft-community/n8n-nodes-recraft-v3",
+  "homepage": "https://github.com/cho-media/n8n-nodes-recraft-v3",
   "author": "n8n Community Contributor",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/recraft-community/n8n-nodes-recraft-v3.git"
+    "url": "git+https://github.com/cho-media/n8n-nodes-recraft-v3.git"
   },
   "bugs": {
-    "url": "https://github.com/recraft-community/n8n-nodes-recraft-v3/issues"
+    "url": "https://github.com/cho-media/n8n-nodes-recraft-v3/issues"
   },
   "engines": {
     "node": ">=18.10.0"
