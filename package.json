@@ -1,0 +1,60 @@
+{
+  "name": "n8n-nodes-recraft-v3",
+  "version": "1.0.0",
+  "description": "Unofficial n8n community node for Recraft v3 AI image generation and editing API - the #1 ranked text-to-image model. Created for testing and community use.",
+  "keywords": [
+    "n8n-community-node-package",
+    "recraft",
+    "recraft-v3",
+    "ai",
+    "image-generation",
+    "text-to-image",
+    "vector-art",
+    "artificial-intelligence",
+    "dalle-alternative",
+    "midjourney-alternative"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/recraft-community/n8n-nodes-recraft-v3",
+  "author": "n8n Community Contributor",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/recraft-community/n8n-nodes-recraft-v3.git"
+  },
+  "bugs": {
+    "url": "https://github.com/recraft-community/n8n-nodes-recraft-v3/issues"
+  },
+  "engines": {
+    "node": ">=18.10.0"
+  },
+  "main": "index.js",
+  "scripts": {
+    "build": "tsc && npm run build:icons",
+    "build:icons": "echo 'Icons built'",
+    "dev": "tsc --watch",
+    "format": "prettier credentials nodes --write || true",
+    "lint": "eslint credentials nodes --ext .ts || true",
+    "lintfix": "eslint credentials nodes --ext .ts --fix || true",
+    "prepublishOnly": "npm run build"
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "n8n": {
+    "n8nNodesApiVersion": 1,
+    "credentials": [
+      "dist/credentials/RecraftApi.credentials.js"
+    ],
+    "nodes": [
+      "dist/nodes/RecraftV3/RecraftV3.node.js"
+    ]
+  },
+  "devDependencies": {
+    "typescript": "^4.9.5"
+  },
+  "peerDependencies": {
+    "n8n-workflow": ">=0.111.0"
+  }
+}
