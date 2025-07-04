@@ -174,7 +174,7 @@ export class RecraftV3 implements INodeType {
 				},
 				default: '',
 				placeholder: 'A majestic landscape with mountains and a lake at sunset',
-				description: 'Text description of the desired image (max 4000 characters for Recraft v3)',
+				description: 'Text description of the desired image (max 1000 bytes)',
 				typeOptions: {
 					rows: 3,
 				},
@@ -197,7 +197,7 @@ export class RecraftV3 implements INodeType {
 					},
 					{
 						name: 'Recraft V2 (20B)',
-						value: 'recraft20b',
+						value: 'recraftv2',
 						description: 'Previous generation model',
 					},
 				],
@@ -215,6 +215,11 @@ export class RecraftV3 implements INodeType {
 					},
 				},
 				options: [
+					{
+						name: 'Any',
+						value: 'any',
+						description: 'Let the model choose the best style',
+					},
 					{
 						name: 'Realistic Image',
 						value: 'realistic_image',
@@ -235,10 +240,53 @@ export class RecraftV3 implements INodeType {
 						value: 'icon',
 						description: 'Simple, recognizable symbols',
 					},
+					{
+						name: 'Logo Raster',
+						value: 'logo_raster',
+						description: 'Raster logo designs',
+					},
 				],
 				default: 'realistic_image',
 				description: 'Style for the generated image',
 			},
+			// Realistic Image Substyles
+			{
+				displayName: 'Sub Style',
+				name: 'substyle',
+				type: 'options',
+				displayOptions: {
+					show: {
+						resource: ['image'],
+						operation: ['generate'],
+						style: ['realistic_image'],
+					},
+				},
+				options: [
+					{ name: 'None', value: '' },
+					{ name: 'Black & White', value: 'b_and_w' },
+					{ name: 'Enterprise', value: 'enterprise' },
+					{ name: 'Evening Light', value: 'evening_light' },
+					{ name: 'Faded Nostalgia', value: 'faded_nostalgia' },
+					{ name: 'Forest Life', value: 'forest_life' },
+					{ name: 'Hard Flash', value: 'hard_flash' },
+					{ name: 'HDR', value: 'hdr' },
+					{ name: 'Motion Blur', value: 'motion_blur' },
+					{ name: 'Mystic Naturalism', value: 'mystic_naturalism' },
+					{ name: 'Natural Light', value: 'natural_light' },
+					{ name: 'Natural Tones', value: 'natural_tones' },
+					{ name: 'Organic Calm', value: 'organic_calm' },
+					{ name: 'Real Life Glow', value: 'real_life_glow' },
+					{ name: 'Retro Realism', value: 'retro_realism' },
+					{ name: 'Retro Snapshot', value: 'retro_snapshot' },
+					{ name: 'Studio Portrait', value: 'studio_portrait' },
+					{ name: 'Urban Drama', value: 'urban_drama' },
+					{ name: 'Village Realism', value: 'village_realism' },
+					{ name: 'Warm Folk', value: 'warm_folk' },
+				],
+				default: '',
+				description: 'Sub-style for realistic images',
+			},
+			// Digital Illustration Substyles
 			{
 				displayName: 'Sub Style',
 				name: 'substyle',
@@ -251,33 +299,112 @@ export class RecraftV3 implements INodeType {
 					},
 				},
 				options: [
-					{
-						name: 'None',
-						value: '',
-					},
-					{
-						name: 'Hand Drawn',
-						value: 'hand_drawn',
-					},
-					{
-						name: 'Pixel Art',
-						value: 'pixel_art',
-					},
-					{
-						name: 'Cartoon',
-						value: 'cartoon',
-					},
-					{
-						name: 'Anime',
-						value: 'anime',
-					},
-					{
-						name: '3D Render',
-						value: '3d_render',
-					},
+					{ name: 'None', value: '' },
+					{ name: '2D Art Poster', value: '2d_art_poster' },
+					{ name: '2D Art Poster 2', value: '2d_art_poster_2' },
+					{ name: 'Antiquarian', value: 'antiquarian' },
+					{ name: 'Bold Fantasy', value: 'bold_fantasy' },
+					{ name: 'Child Book', value: 'child_book' },
+					{ name: 'Cover', value: 'cover' },
+					{ name: 'Crosshatch', value: 'crosshatch' },
+					{ name: 'Digital Engraving', value: 'digital_engraving' },
+					{ name: 'Engraving Color', value: 'engraving_color' },
+					{ name: 'Expressionism', value: 'expressionism' },
+					{ name: 'Freehand Details', value: 'freehand_details' },
+					{ name: 'Grain', value: 'grain' },
+					{ name: 'Grain 20', value: 'grain_20' },
+					{ name: 'Graphic Intensity', value: 'graphic_intensity' },
+					{ name: 'Hand Drawn', value: 'hand_drawn' },
+					{ name: 'Hand Drawn Outline', value: 'hand_drawn_outline' },
+					{ name: 'Handmade 3D', value: 'handmade_3d' },
+					{ name: 'Hard Comics', value: 'hard_comics' },
+					{ name: 'Infantile Sketch', value: 'infantile_sketch' },
+					{ name: 'Long Shadow', value: 'long_shadow' },
+					{ name: 'Modern Folk', value: 'modern_folk' },
+					{ name: 'Multicolor', value: 'multicolor' },
+					{ name: 'Neon Calm', value: 'neon_calm' },
+					{ name: 'Noir', value: 'noir' },
+					{ name: 'Nostalgic Pastel', value: 'nostalgic_pastel' },
+					{ name: 'Outline Details', value: 'outline_details' },
+					{ name: 'Pastel Gradient', value: 'pastel_gradient' },
+					{ name: 'Pastel Sketch', value: 'pastel_sketch' },
+					{ name: 'Pixel Art', value: 'pixel_art' },
+					{ name: 'Plastic', value: 'plastic' },
+					{ name: 'Pop Art', value: 'pop_art' },
+					{ name: 'Pop Renaissance', value: 'pop_renaissance' },
+					{ name: 'Seamless', value: 'seamless' },
+					{ name: 'Street Art', value: 'street_art' },
+					{ name: 'Tablet Sketch', value: 'tablet_sketch' },
+					{ name: 'Urban Glow', value: 'urban_glow' },
+					{ name: 'Urban Sketching', value: 'urban_sketching' },
+					{ name: 'Young Adult Book', value: 'young_adult_book' },
+					{ name: 'Young Adult Book 2', value: 'young_adult_book_2' },
 				],
 				default: '',
 				description: 'Sub-style for digital illustrations',
+			},
+			// Vector Illustration Substyles
+			{
+				displayName: 'Sub Style',
+				name: 'substyle',
+				type: 'options',
+				displayOptions: {
+					show: {
+						resource: ['image'],
+						operation: ['generate'],
+						style: ['vector_illustration'],
+					},
+				},
+				options: [
+					{ name: 'None', value: '' },
+					{ name: 'Bold Stroke', value: 'bold_stroke' },
+					{ name: 'Chemistry', value: 'chemistry' },
+					{ name: 'Colored Stencil', value: 'colored_stencil' },
+					{ name: 'Cosmics', value: 'cosmics' },
+					{ name: 'Cutout', value: 'cutout' },
+					{ name: 'Depressive', value: 'depressive' },
+					{ name: 'Editorial', value: 'editorial' },
+					{ name: 'Emotional Flat', value: 'emotional_flat' },
+					{ name: 'Engraving', value: 'engraving' },
+					{ name: 'Line Art', value: 'line_art' },
+					{ name: 'Line Circuit', value: 'line_circuit' },
+					{ name: 'Linocut', value: 'linocut' },
+					{ name: 'Marker Outline', value: 'marker_outline' },
+					{ name: 'Mosaic', value: 'mosaic' },
+					{ name: 'Naivector', value: 'naivector' },
+					{ name: 'Roundish Flat', value: 'roundish_flat' },
+					{ name: 'Seamless', value: 'seamless' },
+					{ name: 'Segmented Colors', value: 'segmented_colors' },
+					{ name: 'Sharp Contrast', value: 'sharp_contrast' },
+					{ name: 'Thin', value: 'thin' },
+					{ name: 'Vector Photo', value: 'vector_photo' },
+					{ name: 'Vivid Shapes', value: 'vivid_shapes' },
+				],
+				default: '',
+				description: 'Sub-style for vector illustrations',
+			},
+			// Logo Raster Substyles
+			{
+				displayName: 'Sub Style',
+				name: 'substyle',
+				type: 'options',
+				displayOptions: {
+					show: {
+						resource: ['image'],
+						operation: ['generate'],
+						style: ['logo_raster'],
+					},
+				},
+				options: [
+					{ name: 'None', value: '' },
+					{ name: 'Emblem Graffiti', value: 'emblem_graffiti' },
+					{ name: 'Emblem Pop Art', value: 'emblem_pop_art' },
+					{ name: 'Emblem Punk', value: 'emblem_punk' },
+					{ name: 'Emblem Stamp', value: 'emblem_stamp' },
+					{ name: 'Emblem Vintage', value: 'emblem_vintage' },
+				],
+				default: '',
+				description: 'Sub-style for logo raster',
 			},
 			{
 				displayName: 'Image Size',
@@ -290,53 +417,41 @@ export class RecraftV3 implements INodeType {
 					},
 				},
 				options: [
-					{
-						name: '1024x1024 (Square)',
-						value: '1024x1024',
-					},
-					{
-						name: '1365x1024 (Landscape)',
-						value: '1365x1024',
-					},
-					{
-						name: '1024x1365 (Portrait)',
-						value: '1024x1365',
-					},
-					{
-						name: '1536x1024 (Wide)',
-						value: '1536x1024',
-					},
-					{
-						name: '1024x1536 (Tall)',
-						value: '1024x1536',
-					},
-					{
-						name: '1820x1024 (Ultra Wide)',
-						value: '1820x1024',
-					},
-					{
-						name: '1024x1820 (Ultra Tall)',
-						value: '1024x1820',
-					},
-					{
-						name: '2048x1024 (Extra Wide)',
-						value: '2048x1024',
-					},
-					{
-						name: '1024x2048 (Extra Tall)',
-						value: '1024x2048',
-					},
-					{
-						name: '1280x1024 (Standard Wide)',
-						value: '1280x1024',
-					},
-					{
-						name: '1024x1280 (Standard Tall)',
-						value: '1024x1280',
-					},
+					{ name: '1024x1024 (Square)', value: '1024x1024' },
+					{ name: '1365x1024 (Landscape)', value: '1365x1024' },
+					{ name: '1024x1365 (Portrait)', value: '1024x1365' },
+					{ name: '1536x1024 (Wide)', value: '1536x1024' },
+					{ name: '1024x1536 (Tall)', value: '1024x1536' },
+					{ name: '1820x1024 (Ultra Wide)', value: '1820x1024' },
+					{ name: '1024x1820 (Ultra Tall)', value: '1024x1820' },
+					{ name: '2048x1024 (Extra Wide)', value: '2048x1024' },
+					{ name: '1024x2048 (Extra Tall)', value: '1024x2048' },
+					{ name: '1434x1024', value: '1434x1024' },
+					{ name: '1024x1434', value: '1024x1434' },
+					{ name: '1280x1024 (Standard Wide)', value: '1280x1024' },
+					{ name: '1024x1280 (Standard Tall)', value: '1024x1280' },
+					{ name: '1707x1024', value: '1707x1024' },
+					{ name: '1024x1707', value: '1024x1707' },
 				],
 				default: '1024x1024',
 				description: 'Size of the generated image',
+			},
+			{
+				displayName: 'Number of Images',
+				name: 'numberOfImages',
+				type: 'number',
+				displayOptions: {
+					show: {
+						resource: ['image'],
+						operation: ['generate'],
+					},
+				},
+				default: 1,
+				typeOptions: {
+					minValue: 1,
+					maxValue: 6,
+				},
+				description: 'Number of images to generate (1-6)',
 			},
 			{
 				displayName: 'Custom Style ID',
@@ -351,6 +466,23 @@ export class RecraftV3 implements INodeType {
 				default: '',
 				placeholder: 'style-id-from-create-style-operation',
 				description: 'Use a custom style ID instead of predefined styles (overrides style parameter)',
+			},
+			{
+				displayName: 'Negative Prompt',
+				name: 'negativePrompt',
+				type: 'string',
+				displayOptions: {
+					show: {
+						resource: ['image'],
+						operation: ['generate'],
+					},
+				},
+				default: '',
+				placeholder: 'blurry, low quality, distorted',
+				description: 'Text description of undesired elements in the image',
+				typeOptions: {
+					rows: 2,
+				},
 			},
 			{
 				displayName: 'Response Format',
@@ -392,6 +524,69 @@ export class RecraftV3 implements INodeType {
 				},
 				options: [
 					{
+						displayName: 'Artistic Level',
+						name: 'artisticLevel',
+						type: 'number',
+						default: 3,
+						typeOptions: {
+							minValue: 0,
+							maxValue: 5,
+						},
+						description: 'Defines artistic tone (0=simple/static, 5=dynamic/eccentric)',
+					},
+					{
+						displayName: 'Background Color',
+						name: 'backgroundColor',
+						type: 'fixedCollection',
+						default: {},
+						description: 'Use given color as desired background color',
+						options: [
+							{
+								name: 'color',
+								displayName: 'Background Color',
+								values: [
+									{
+										displayName: 'Red (0-255)',
+										name: 'r',
+										type: 'number',
+										default: 255,
+										typeOptions: {
+											minValue: 0,
+											maxValue: 255,
+										},
+									},
+									{
+										displayName: 'Green (0-255)',
+										name: 'g',
+										type: 'number',
+										default: 255,
+										typeOptions: {
+											minValue: 0,
+											maxValue: 255,
+										},
+									},
+									{
+										displayName: 'Blue (0-255)',
+										name: 'b',
+										type: 'number',
+										default: 255,
+										typeOptions: {
+											minValue: 0,
+											maxValue: 255,
+										},
+									},
+								],
+							},
+						],
+					},
+					{
+						displayName: 'No Text',
+						name: 'noText',
+						type: 'boolean',
+						default: false,
+						description: 'Do not embed text layouts in the image',
+					},
+					{
 						displayName: 'Colors',
 						name: 'colors',
 						type: 'fixedCollection',
@@ -399,7 +594,7 @@ export class RecraftV3 implements INodeType {
 							multipleValues: true,
 						},
 						default: {},
-						description: 'Specify colors to use in the generated image',
+						description: 'Array of preferable colors to use in the image',
 						options: [
 							{
 								name: 'color',
@@ -447,7 +642,7 @@ export class RecraftV3 implements INodeType {
 							multipleValues: true,
 						},
 						default: {},
-						description: 'Define text elements and their positions in the image',
+						description: 'Define text elements and their positions in the image (Recraft V3 only)',
 						options: [
 							{
 								name: 'textElement',
@@ -458,7 +653,7 @@ export class RecraftV3 implements INodeType {
 										name: 'text',
 										type: 'string',
 										default: '',
-										description: 'Individual word to place in the image',
+										description: 'Individual word to place in the image (supported characters only)',
 									},
 									{
 										displayName: 'Bounding Box (JSON)',
@@ -501,7 +696,7 @@ export class RecraftV3 implements INodeType {
 				},
 				default: '',
 				placeholder: 'Transform the scene to winter with snow',
-				description: 'Text description for the transformation',
+				description: 'Text description for the transformation (max 1000 bytes)',
 				typeOptions: {
 					rows: 2,
 				},
@@ -510,6 +705,7 @@ export class RecraftV3 implements INodeType {
 				displayName: 'Strength',
 				name: 'strength',
 				type: 'number',
+				required: true,
 				displayOptions: {
 					show: {
 						resource: ['image'],
@@ -523,6 +719,40 @@ export class RecraftV3 implements INodeType {
 					numberPrecision: 2,
 				},
 				description: 'How much to change the input image (0 = no change, 1 = complete change)',
+			},
+			{
+				displayName: 'Number of Images',
+				name: 'numberOfImages',
+				type: 'number',
+				displayOptions: {
+					show: {
+						resource: ['image'],
+						operation: ['imageToImage', 'inpaint', 'replaceBackground'],
+					},
+				},
+				default: 1,
+				typeOptions: {
+					minValue: 1,
+					maxValue: 6,
+				},
+				description: 'Number of images to generate (1-6)',
+			},
+			{
+				displayName: 'Negative Prompt',
+				name: 'negativePrompt',
+				type: 'string',
+				displayOptions: {
+					show: {
+						resource: ['image'],
+						operation: ['imageToImage', 'inpaint', 'replaceBackground'],
+					},
+				},
+				default: '',
+				placeholder: 'blurry, low quality, distorted',
+				description: 'Text description of undesired elements in the image',
+				typeOptions: {
+					rows: 2,
+				},
 			},
 			{
 				displayName: 'Style',
@@ -554,6 +784,31 @@ export class RecraftV3 implements INodeType {
 				],
 				default: 'any',
 				description: 'Style for the transformation',
+			},
+			{
+				displayName: 'Response Format',
+				name: 'responseFormat',
+				type: 'options',
+				displayOptions: {
+					show: {
+						resource: ['image'],
+						operation: ['imageToImage', 'inpaint', 'replaceBackground', 'removeBackground', 'vectorize', 'crispUpscale', 'creativeUpscale'],
+					},
+				},
+				options: [
+					{
+						name: 'URL',
+						value: 'url',
+						description: 'Return image URL',
+					},
+					{
+						name: 'Base64 JSON',
+						value: 'b64_json',
+						description: 'Return base64 encoded image data',
+					},
+				],
+				default: 'url',
+				description: 'Format of the response',
 			},
 			// Inpaint specific
 			{
@@ -615,7 +870,7 @@ export class RecraftV3 implements INodeType {
 					},
 				},
 				default: 'data',
-				description: 'Name of the binary property containing reference images (comma-separated for multiple)',
+				description: 'Name of the binary property containing reference images (comma-separated for multiple, max 5 images, total max 5MB)',
 			},
 		],
 	};
@@ -638,15 +893,17 @@ export class RecraftV3 implements INodeType {
 						const style = this.getNodeParameter('style', i) as string;
 						const substyle = this.getNodeParameter('substyle', i) as string;
 						const size = this.getNodeParameter('size', i) as string;
+						const numberOfImages = this.getNodeParameter('numberOfImages', i) as number;
 						const styleId = this.getNodeParameter('styleId', i) as string;
+						const negativePrompt = this.getNodeParameter('negativePrompt', i) as string;
 						const responseFormat = this.getNodeParameter('responseFormat', i) as string;
 						const advancedOptions = this.getNodeParameter('advancedOptions', i) as IDataObject;
 
-						// Validate prompt length
-						if (prompt.length > 4000) {
+						// Validate prompt length (1000 bytes)
+						if (Buffer.byteLength(prompt, 'utf8') > 1000) {
 							throw new NodeOperationError(
 								this.getNode(),
-								`Prompt is too long (${prompt.length} characters). Maximum allowed is 4000 characters.`,
+								`Prompt is too long (${Buffer.byteLength(prompt, 'utf8')} bytes). Maximum allowed is 1000 bytes.`,
 								{ itemIndex: i }
 							);
 						}
@@ -655,8 +912,14 @@ export class RecraftV3 implements INodeType {
 							prompt,
 							model,
 							size,
+							n: numberOfImages,
 							response_format: responseFormat,
 						};
+
+						// Add negative prompt if provided
+						if (negativePrompt && negativePrompt.trim()) {
+							body.negative_prompt = negativePrompt.trim();
+						}
 
 						// Handle style vs style_id
 						if (styleId && styleId.trim()) {
@@ -668,10 +931,31 @@ export class RecraftV3 implements INodeType {
 							}
 						}
 
-						// Handle advanced options
-						if (advancedOptions.colors || advancedOptions.textLayout) {
+						// Handle advanced options (controls)
+						if (Object.keys(advancedOptions).length > 0) {
 							const controls: IDataObject = {};
 							
+							// Artistic level
+							if (advancedOptions.artisticLevel !== undefined) {
+								controls.artistic_level = advancedOptions.artisticLevel;
+							}
+
+							// Background color
+							if (advancedOptions.backgroundColor) {
+								const bgColor = (advancedOptions.backgroundColor as IDataObject).color as IDataObject;
+								if (bgColor) {
+									controls.background_color = {
+										rgb: [bgColor.r, bgColor.g, bgColor.b]
+									};
+								}
+							}
+
+							// No text
+							if (advancedOptions.noText === true) {
+								controls.no_text = true;
+							}
+
+							// Colors array
 							if (advancedOptions.colors) {
 								const colors = (advancedOptions.colors as IDataObject).color as IDataObject[];
 								if (colors && colors.length > 0) {
@@ -681,7 +965,8 @@ export class RecraftV3 implements INodeType {
 								}
 							}
 
-							if (advancedOptions.textLayout) {
+							// Text layout (only for Recraft V3)
+							if (advancedOptions.textLayout && model === 'recraftv3') {
 								const textElements = (advancedOptions.textLayout as IDataObject).textElement as IDataObject[];
 								if (textElements && textElements.length > 0) {
 									try {
@@ -699,6 +984,7 @@ export class RecraftV3 implements INodeType {
 								}
 							}
 
+							// Only add controls if we have any
 							if (Object.keys(controls).length > 0) {
 								body.controls = controls;
 							}
@@ -711,14 +997,24 @@ export class RecraftV3 implements INodeType {
 						const strength = this.getNodeParameter('strength', i) as number;
 						const transformStyle = this.getNodeParameter('transformStyle', i) as string;
 						const inputImage = this.getNodeParameter('inputImage', i) as string;
+						const numberOfImages = this.getNodeParameter('numberOfImages', i) as number;
+						const negativePrompt = this.getNodeParameter('negativePrompt', i) as string;
+						const responseFormat = this.getNodeParameter('responseFormat', i) as string;
 
 						const binaryData = await validateBinaryData.call(this, i, inputImage);
 						
-						const formData = {
+						const formData: IDataObject = {
 							prompt,
 							strength: strength.toString(),
 							style: transformStyle,
+							n: numberOfImages.toString(),
+							response_format: responseFormat,
 						};
+
+						// Add negative prompt if provided
+						if (negativePrompt && negativePrompt.trim()) {
+							formData.negative_prompt = negativePrompt.trim();
+						}
 
 						responseData = await recraftApiRequest.call(this, 'POST', '/images/imageToImage', formData, {}, {}, {
 							image: {
@@ -735,14 +1031,24 @@ export class RecraftV3 implements INodeType {
 						const transformStyle = this.getNodeParameter('transformStyle', i) as string;
 						const inputImage = this.getNodeParameter('inputImage', i) as string;
 						const maskImage = this.getNodeParameter('maskImage', i) as string;
+						const numberOfImages = this.getNodeParameter('numberOfImages', i) as number;
+						const negativePrompt = this.getNodeParameter('negativePrompt', i) as string;
+						const responseFormat = this.getNodeParameter('responseFormat', i) as string;
 
 						const imageBinaryData = await validateBinaryData.call(this, i, inputImage);
 						const maskBinaryData = await validateBinaryData.call(this, i, maskImage);
 						
-						const formData = {
+						const formData: IDataObject = {
 							prompt,
 							style: transformStyle,
+							n: numberOfImages.toString(),
+							response_format: responseFormat,
 						};
+
+						// Add negative prompt if provided
+						if (negativePrompt && negativePrompt.trim()) {
+							formData.negative_prompt = negativePrompt.trim();
+						}
 
 						responseData = await recraftApiRequest.call(this, 'POST', '/images/inpaint', formData, {}, {}, {
 							image: {
@@ -765,13 +1071,23 @@ export class RecraftV3 implements INodeType {
 						const prompt = this.getNodeParameter('prompt', i) as string;
 						const transformStyle = this.getNodeParameter('transformStyle', i) as string;
 						const inputImage = this.getNodeParameter('inputImage', i) as string;
+						const numberOfImages = this.getNodeParameter('numberOfImages', i) as number;
+						const negativePrompt = this.getNodeParameter('negativePrompt', i) as string;
+						const responseFormat = this.getNodeParameter('responseFormat', i) as string;
 
 						const binaryData = await validateBinaryData.call(this, i, inputImage);
 						
-						const formData = {
+						const formData: IDataObject = {
 							prompt,
 							style: transformStyle,
+							n: numberOfImages.toString(),
+							response_format: responseFormat,
 						};
+
+						// Add negative prompt if provided
+						if (negativePrompt && negativePrompt.trim()) {
+							formData.negative_prompt = negativePrompt.trim();
+						}
 
 						responseData = await recraftApiRequest.call(this, 'POST', '/images/replaceBackground', formData, {}, {}, {
 							image: {
@@ -785,11 +1101,15 @@ export class RecraftV3 implements INodeType {
 
 					} else if (['removeBackground', 'vectorize', 'crispUpscale', 'creativeUpscale'].includes(operation)) {
 						const inputImage = this.getNodeParameter('inputImage', i) as string;
+						const responseFormat = this.getNodeParameter('responseFormat', i) as string;
 						const binaryData = await validateBinaryData.call(this, i, inputImage);
 						
 						const endpoint = `/images/${operation}`;
+						const formData: IDataObject = {
+							response_format: responseFormat,
+						};
 						
-						responseData = await recraftApiRequest.call(this, 'POST', endpoint, {}, {}, {}, {
+						responseData = await recraftApiRequest.call(this, 'POST', endpoint, formData, {}, {}, {
 							file: {
 								value: Buffer.from(binaryData.data, 'base64'),
 								options: {
@@ -811,6 +1131,14 @@ export class RecraftV3 implements INodeType {
 							throw new NodeOperationError(
 								this.getNode(),
 								'At least one reference image is required for style creation.',
+								{ itemIndex: i }
+							);
+						}
+
+						if (imageNames.length > 5) {
+							throw new NodeOperationError(
+								this.getNode(),
+								'Maximum 5 reference images allowed for style creation.',
 								{ itemIndex: i }
 							);
 						}
