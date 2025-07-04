@@ -1,6 +1,6 @@
 {
   "name": "n8n-nodes-recraft-v3",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Unofficial n8n community node for Recraft v3 AI image generation and editing API - the #1 ranked text-to-image model. Created for testing and community use.",
   "keywords": [
     "n8n-community-node-package",
