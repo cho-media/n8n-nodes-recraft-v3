@@ -2,6 +2,7 @@ import {
 	IDataObject,
 	IExecuteFunctions,
 	IHookFunctions,
+	IHttpRequestMethods,
 	ILoadOptionsFunctions,
 	IRequestOptions,
 	NodeApiError,
@@ -10,7 +11,7 @@ import {
 
 export async function recraftApiRequest(
 	this: IHookFunctions | IExecuteFunctions | ILoadOptionsFunctions,
-	method: string,
+	method: IHttpRequestMethods,
 	resource: string,
 	body: any = {},
 	qs: IDataObject = {},
